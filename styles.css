@@ -55,55 +55,72 @@ img {
 
 /* 头部样式 - 导航栏和标题 */
 header {
-    background-color: rgba(20, 20, 20, 0.8); /* 半透明背景 */
-    backdrop-filter: blur(10px); /* 背景模糊效果 */
-    -webkit-backdrop-filter: blur(10px); /* Safari浏览器兼容 */
-    box-shadow: 0 2px 20px rgba(0, 113, 227, 0.2); /* 蓝色阴影效果 */
-    z-index: 100; /* 确保导航栏在其他元素之上 */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 微妙的底部边框 */
-    position: fixed; /* 固定在顶部 */
-    width: 100%; /* 宽度100% */
-    top: 0; /* 顶部对齐 */
+    background-color: rgba(20, 20, 20, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 113, 227, 0.2);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 header .container {
     display: flex;
-    justify-content: space-between; /* 两端对齐 */
-    align-items: center; /* 垂直居中 */
-    padding: 15px 20px; /* 内边距 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 10px;
 }
 
 header h1 {
-    font-size: 1.5rem; /* 标题字体大小 */
-    font-weight: 600; /* 字体粗细 */
-    color: #fff; /* 白色文本 */
-    text-shadow: 0 0 10px rgba(0, 113, 227, 0.5); /* 蓝色文字阴影，创造发光效果 */
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 113, 227, 0.5);
+    margin-bottom: 15px;
+}
+
+nav {
+    width: 100%;
 }
 
 nav ul {
-    display: flex; /* 水平排列导航项 */
-    flex-wrap: wrap; /* 允许在小屏幕上换行 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 5px;
 }
 
 nav ul li {
-    margin-left: 20px; /* 减小导航项之间的间距 */
-    margin-bottom: 5px; /* 在换行时提供垂直间距 */
+    margin: 0;
 }
 
 nav ul li a {
-    font-weight: 500; /* 字体粗细 */
-    transition: all 0.3s; /* 所有属性的过渡效果 */
-    padding: 5px 15px; /* 内边距 */
-    border-radius: 20px; /* 圆角 */
-    color: rgba(255, 255, 255, 0.8); /* 半透明白色文本 */
-    position: relative; /* 相对定位，用于波纹效果 */
-    overflow: hidden; /* 隐藏溢出内容 */
+    font-weight: 500;
+    transition: all 0.3s;
+    padding: 5px 12px;
+    border-radius: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    position: relative;
+    overflow: hidden;
+    font-size: 0.9rem;
+    display: block;
+    white-space: nowrap;
 }
 
 nav ul li a:hover {
-    color: #fff; /* 悬停时文本变为纯白色 */
-    background-color: rgba(0, 113, 227, 0.2); /* 半透明蓝色背景 */
-    box-shadow: 0 0 15px rgba(0, 113, 227, 0.3); /* 蓝色阴影，创造发光效果 */
+    color: #fff;
+    background-color: rgba(0, 113, 227, 0.2);
+    box-shadow: 0 0 15px rgba(0, 113, 227, 0.3);
+}
+
+nav ul li a.active {
+    background-color: rgba(0, 113, 227, 0.3);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(0, 113, 227, 0.4);
 }
 
 nav ul li a[target="_blank"]::after {
@@ -113,29 +130,61 @@ nav ul li a[target="_blank"]::after {
     opacity: 0.7;
 }
 
-/* 导航点击波纹效果 - 点击导航链接时的动画 */
-.nav-ripple {
-    position: absolute; /* 绝对定位 */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0); /* 初始缩放为0 */
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(0, 113, 227, 0.6) 0%, transparent 70%); /* 径向渐变 */
-    border-radius: 50%; /* 圆形 */
-    animation: navRipple 0.6s ease-out; /* 应用动画 */
-    pointer-events: none; /* 不响应鼠标事件 */
-    z-index: -1; /* 置于内容下方 */
+/* 为模块添加滚动偏移量，防止导航栏遮挡 */
+.module {
+    scroll-margin-top: 130px;
 }
 
-@keyframes navRipple {
+/* 响应式导航调整 */
+@media (min-width: 1024px) {
+    header .container {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 15px 20px;
+    }
+    
+    header h1 {
+        margin-bottom: 0;
+    }
+    
+    nav {
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    nav ul li a {
+        padding: 3px 8px;
+        font-size: 0.8rem;
+    }
+    
+    .module {
+        scroll-margin-top: 150px;
+    }
+}
+
+/* 导航发光提示 */
+.nav-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(0, 113, 227, 0.6) 0%, transparent 70%);
+    border-radius: 15px;
+    opacity: 0;
+    z-index: -1;
+    animation: navHighlight 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes navHighlight {
     0% {
-        transform: translate(-50%, -50%) scale(0); /* 开始时缩放为0 */
-        opacity: 1; /* 完全不透明 */
+        opacity: 0.3;
+        transform: scale(0.9);
     }
     100% {
-        transform: translate(-50%, -50%) scale(3); /* 结束时放大3倍 */
-        opacity: 0; /* 完全透明 */
+        opacity: 0.8;
+        transform: scale(1.1);
     }
 }
 
@@ -180,20 +229,26 @@ nav ul li a[target="_blank"]::after {
 }
 
 .module {
-    position: relative; /* 相对定位 */
-    overflow: hidden; /* 隐藏溢出内容 */
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 自定义过渡曲线，创造弹性效果 */
-    opacity: 0; /* 初始透明度为0，用于进入动画 */
-    transform: translateY(40px) rotateY(5deg) scale(0.95); /* 增强初始偏移效果 */
-    border-radius: 20px; /* 圆角 */
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3); /* 阴影效果 */
-    background: linear-gradient(145deg, rgba(30, 30, 30, 0.6), rgba(15, 15, 15, 0.8)); /* 渐变背景 */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* 微妙的边框 */
-    flex: 0 0 calc(50% - 20px); /* 宽度为50%减去间距的一半 */
-    height: 0; /* 高度设为0 */
-    padding-bottom: calc((50% - 20px) * 2/3); /* 3:2比例的高度 */
-    margin: 0; /* 移除负边距 */
-    transform-origin: center center; /* 变换原点 */
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: translateY(20px);
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, rgba(30, 30, 30, 0.6), rgba(15, 15, 15, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex: 0 0 calc(50% - 20px);
+    height: 0;
+    padding-bottom: calc((50% - 20px) * 2/3);
+    margin: 0;
+    transform-origin: center center;
+    will-change: transform, opacity;
+}
+
+.module.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* 第一个和最后一个模块的特殊样式 */
@@ -234,11 +289,6 @@ nav ul li a[target="_blank"]::after {
 
 .module:hover::before, .module.hover::before, .module.active::before {
     opacity: 1; /* 悬停或激活时显示光晕 */
-}
-
-.module.visible {
-    opacity: 1; /* 可见状态的透明度 */
-    transform: translateY(0) rotateY(0) scale(1); /* 重置偏移和旋转，添加缩放复原 */
 }
 
 .module:hover, .module.hover {
@@ -607,16 +657,16 @@ footer {
 
 @media (max-width: 768px) {
     .module-grid {
-        gap: 30px;
+        gap: 20px;
     }
     
     .module {
-        flex: 0 0 100%;
-        padding-bottom: 66.67%;
+        flex: 0 0 calc(100% - 20px);
+        padding-bottom: calc((100% - 20px) * 2/3);
     }
     
     .screen {
-        padding: 20px 20px 60px;
+        padding: 20px;
     }
 }
 
@@ -811,258 +861,6 @@ footer {
 
 .scroll-down:hover::after {
     opacity: 1;
-}
-
-/* 模块显示动画增强 */
-.module {
-    position: relative; /* 相对定位 */
-    overflow: hidden; /* 隐藏溢出内容 */
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 自定义过渡曲线，创造弹性效果 */
-    opacity: 0; /* 初始透明度为0，用于进入动画 */
-    transform: translateY(40px) rotateY(5deg) scale(0.95); /* 增强初始偏移效果 */
-    border-radius: 20px; /* 圆角 */
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3); /* 阴影效果 */
-    background: linear-gradient(145deg, rgba(30, 30, 30, 0.6), rgba(15, 15, 15, 0.8)); /* 渐变背景 */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* 微妙的边框 */
-    flex: 0 0 calc(50% - 20px); /* 宽度为50%减去间距的一半 */
-    height: 0; /* 高度设为0 */
-    padding-bottom: calc((50% - 20px) * 2/3); /* 3:2比例的高度 */
-    margin: 0; /* 移除负边距 */
-    transform-origin: center center; /* 变换原点 */
-}
-
-.module.visible {
-    opacity: 1; /* 可见状态的透明度 */
-    transform: translateY(0) rotateY(0) scale(1); /* 重置偏移和旋转，添加缩放复原 */
-}
-
-.module-content {
-    position: absolute; /* 绝对定位 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column; /* 垂直排列子元素 */
-    z-index: 2; /* 层级 */
-    border-radius: 20px; /* 圆角 */
-    overflow: hidden; /* 隐藏溢出内容 */
-}
-
-.module-image {
-    flex: 1; /* 占用剩余空间 */
-    overflow: hidden; /* 隐藏溢出内容 */
-    display: flex;
-    align-items: center; /* 垂直居中 */
-    justify-content: center; /* 水平居中 */
-    background-color: #1a1a1a; /* 深色背景 */
-    position: relative; /* 相对定位 */
-}
-
-.module-image::after {
-    content: ''; /* 伪元素内容 */
-    position: absolute; /* 绝对定位 */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, transparent 70%, rgba(0, 0, 0, 0.8) 100%); /* 渐变遮罩，底部变暗 */
-    z-index: 1; /* 层级 */
-}
-
-.module-image.dark {
-    background-color: #000; /* 黑色背景 */
-}
-
-.module-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 覆盖整个容器，可能会裁剪图片 */
-    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); /* 自定义过渡曲线 */
-}
-
-.module:hover .module-image img, .module.hover .module-image img, .module.active .module-image img {
-    transform: scale(1.08); /* 放大图片 */
-}
-
-.module-info {
-    position: absolute; /* 绝对定位 */
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 25px; /* 内边距 */
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); /* 渐变背景，底部黑色渐变至透明 */
-    color: white; /* 白色文本 */
-    transition: all 0.4s ease; /* 过渡效果 */
-    z-index: 2; /* 层级 */
-}
-
-.module:hover .module-info, .module.hover .module-info, .module.active .module-info {
-    padding-bottom: 35px; /* 增加底部内边距 */
-}
-
-.module-info h2 {
-    font-size: 1.5rem;
-    margin-bottom: 12px;
-    font-weight: 600;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    position: relative;
-    display: inline-block;
-    padding: 8px 20px;
-    color: #fff;
-    overflow: hidden;
-    border-radius: 6px;
-    transform: translateX(-20px);
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.module-info h2::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(50, 50, 50, 0.7);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    z-index: -1;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.module-info h2::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 10px;
-    width: 50px;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), transparent);
-    z-index: -1;
-    opacity: 0;
-    transition: all 0.4s ease 0.2s;
-}
-
-.module.visible .module-info h2 {
-    transform: translateX(0);
-    opacity: 1;
-}
-
-.module.visible .module-info h2::before {
-    transform: scaleX(1);
-}
-
-.module.visible .module-info h2::after {
-    opacity: 1;
-    width: 80px;
-}
-
-.module:hover .module-info h2::before {
-    background: rgba(70, 70, 70, 0.8);
-    transition: background 0.3s ease;
-}
-
-.module-info p {
-    margin: 0 0 18px 0;
-    opacity: 0;
-    transform: translateX(-15px);
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0.3s;
-}
-
-.module.visible .module-info p {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.module-actions {
-    display: flex;
-    justify-content: center; /* 居中对齐单个按钮 */
-    opacity: 0; /* 初始透明 */
-    transform: translateY(15px); /* 向下偏移 */
-    transition: all 0.4s ease; /* 过渡效果 */
-}
-
-.module-actions .btn {
-    flex: 0 0 auto; /* 自适应宽度 */
-    min-width: 120px; /* 最小宽度 */
-    text-align: center; /* 文本居中 */
-}
-
-/* 当有两个按钮时的特殊样式 */
-.module-actions:has(.btn + .btn) {
-    justify-content: space-between; /* 两个按钮之间留空间 */
-}
-
-.module-actions:has(.btn + .btn) .btn {
-    flex: 0 0 48%; /* 按钮宽度 */
-}
-
-.module:hover .module-actions, .module.hover .module-actions, .module.active .module-actions {
-    opacity: 1; /* 悬停或激活时显示 */
-    transform: translateY(0); /* 重置偏移 */
-}
-
-/* 按钮样式 - 交互元素 */
-.btn {
-    display: inline-block; /* 行内块元素 */
-    padding: 8px 20px; /* 内边距 */
-    border-radius: 25px; /* 圆角 */
-    font-weight: 600; /* 字体粗细 */
-    transition: all 0.3s; /* 过渡效果 */
-    cursor: pointer; /* 鼠标指针样式 */
-    font-size: 0.9rem; /* 字体大小 */
-    position: relative; /* 相对定位 */
-    overflow: hidden; /* 隐藏溢出内容 */
-}
-
-.btn::before {
-    content: ''; /* 伪元素内容 */
-    position: absolute; /* 绝对定位 */
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #0071e3, #00c6fb, #0071e3); /* 渐变背景 */
-    z-index: -1; /* 置于内容下方 */
-    border-radius: 25px; /* 圆角 */
-    opacity: 0; /* 初始透明 */
-    transition: opacity 0.3s ease; /* 透明度过渡 */
-}
-
-.btn.primary {
-    background-color: #0071e3; /* 蓝色背景 */
-    color: white; /* 白色文本 */
-    box-shadow: 0 5px 15px rgba(0, 113, 227, 0.4); /* 阴影效果 */
-    font-size: 0.85rem; /* 稍微减小字体大小 */
-}
-
-.btn.primary:hover {
-    background-color: #0077ed; /* 悬停时稍微亮一点的蓝色 */
-    transform: translateY(-3px); /* 上移 */
-    box-shadow: 0 8px 20px rgba(0, 113, 227, 0.6), 0 0 15px rgba(0, 113, 227, 0.4); /* 增强阴影和发光效果 */
-}
-
-.btn.primary:hover::before {
-    opacity: 1; /* 悬停时显示渐变边框 */
-    animation: rotate 2s linear infinite; /* 应用旋转动画 */
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg); /* 开始角度 */
-    }
-    100% {
-        transform: rotate(360deg); /* 结束角度，旋转一周 */
-    }
 }
 
 /* 媒体查询适配 */
